@@ -4,7 +4,7 @@
   box-sizing: border-box;
   height: 100%;
   right: 0px !important;
-  top: 0px !important;
+  top: calc(0px + var(--header-height, 0px)) !important;
   bottom: 0px !important;
   left: 0px !important;
   font-size: 0.8em;
@@ -21,7 +21,7 @@
 }
 
 .spantree-pane-header {
-  height: 40px;
+  height: var(--top-bar-height, 40px);
   background-color: rgb(77, 61, 146);
   border-bottom: 1px #404040 solid;
   color: white;

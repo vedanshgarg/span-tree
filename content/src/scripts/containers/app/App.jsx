@@ -22,7 +22,7 @@ import "./App.css";
 import { defaultOptions } from "../../contexts/OptionsContext";
 
 const importFileIconCSS = `${browserKey()}-extension://${chrome.i18n.getMessage(
-  "@@extension_id"
+  "@@extension_id",
 )}/libs/file-icons.css`;
 const tabIdClient = new TabIdentifierClient();
 const parentDiv = document.querySelector("body");
@@ -53,7 +53,8 @@ class App extends Component {
           document.querySelector(".ref-selector") !== null ||
           document.querySelector("[data-qa-selector='branches_dropdown']")
             .children[0] !== null) &&
-        document.querySelector(".nav-sidebar") !== null
+        (document.querySelector(".nav-sidebar") !== null ||
+          document.querySelector(".super-sidebar") !== null)
       );
     };
     this.setShowSearchbar = (showSearchbar) => {
@@ -96,7 +97,7 @@ class App extends Component {
     if (prevProps.options !== this.props.options) {
       localStorage.setItem(
         "spantree-options",
-        JSON.stringify(this.props.options.data)
+        JSON.stringify(this.props.options.data),
       );
     }
   }
@@ -124,14 +125,14 @@ class App extends Component {
                 setReloading={this.setReloading}
                 setShowSearchbarTrue={() => this.setShowSearchbar(true)}
               />,
-              parentDiv
+              parentDiv,
             )
           : ReactDOM.createPortal(
               <Toggler
                 handleClick={this.toggleOpenedThisTab}
                 pinned={this.props.pinned}
               />,
-              document.getElementById("rcr-anchor")
+              document.getElementById("rcr-anchor"),
             )}
         <SearchBar
           worker={this.searchBarWorker}

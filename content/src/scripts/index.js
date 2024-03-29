@@ -11,20 +11,37 @@ const proxyStore = new Store();
 const anchor = document.createElement("div");
 anchor.id = "rcr-anchor";
 
-if (document.querySelector(".layout-page") !== null) {
-  document
-    .querySelector(".layout-page")
-    .insertBefore(anchor, document.querySelector(".layout-page").childNodes[0]);
-  proxyStore.ready().then(() => {
-    render(
-      <Provider store={proxyStore}>
-        <OptionsProvider>
-          <App />
-        </OptionsProvider>
-      </Provider>,
-      document.getElementById("rcr-anchor")
-    );
-  });
+if (document.querySelectorAll('[aria-label="Loading"]').length === 0) {
+  mount();
+} else {
+  let intervalId = null;
+  intervalId = setInterval(() => {
+    if (document.querySelectorAll('[aria-label="Loading"]').length === 0) {
+      clearInterval(intervalId);
+      mount();
+    }
+  }, 500);
 }
+
+const mount = () => {
+  if (document.querySelector(".layout-page") !== null) {
+    document
+      .querySelector(".layout-page")
+      .insertBefore(
+        anchor,
+        document.querySelector(".layout-page").childNodes[0],
+      );
+    proxyStore.ready().then(() => {
+      render(
+        <Provider store={proxyStore}>
+          <OptionsProvider>
+            <App />
+          </OptionsProvider>
+        </Provider>,
+        document.getElementById("rcr-anchor"),
+      );
+    });
+  }
+};
 
 export default proxyStore;

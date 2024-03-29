@@ -1,7 +1,10 @@
 .spantree-toggler {
   position: fixed;
   padding: 4px 8px;
-  top: 40%;
+  top: calc(
+    40% + var(--header-height, 0px) + var(--top-bar-height, 0px) +
+      var(--system-header-height, 0px) + var(--performance-bar-height, 0px)
+  );
   transform: rotate(-90deg);
   transform-origin: top left;
   border-radius: 0px 0px 4px 4px;
