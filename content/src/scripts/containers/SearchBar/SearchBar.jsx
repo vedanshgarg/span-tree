@@ -75,6 +75,7 @@ function SearchBar({
       const isActionKey = isMac ? event.metaKey : event.ctrlKey;
       if (isActionKey && (event.key === "p" || event.key === "P")) {
         event.preventDefault();
+        event.stopPropagation();
         setShowSearchbar(true);
       } else if (isActionKey && event.key === "Enter" && showSearchbar) {
         handleRedirect(activeResult, true);
@@ -84,18 +85,18 @@ function SearchBar({
         event.preventDefault();
         setActiveResult(
           (activeResult) =>
-            (searchResults.length + activeResult - 1) % searchResults.length
+            (searchResults.length + activeResult - 1) % searchResults.length,
         );
       } else if (event.key === "ArrowDown" && showSearchbar) {
         event.preventDefault();
         setActiveResult(
-          (activeResult) => (activeResult + 1) % searchResults.length
+          (activeResult) => (activeResult + 1) % searchResults.length,
         );
       } else if (event.key === "Escape" && showSearchbar) {
         setShowSearchbar(false);
       }
     },
-    [showSearchbar, activeResult, searchResults]
+    [showSearchbar, activeResult, searchResults],
   );
 
   useEventListener("keydown", handleKeyDown);
@@ -127,7 +128,7 @@ function SearchBar({
         window.navigator.platform.indexOf(currentValue) !== -1 || accumulator
       );
     },
-    false
+    false,
   );
 
   const workerCall = () => {
@@ -149,7 +150,7 @@ function SearchBar({
       setTimeout(() => {
         workerCall();
         setDebounceTimerId(null);
-      }, 500)
+      }, 500),
     );
   };
 
